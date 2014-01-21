@@ -4,7 +4,11 @@ import jswtorparser.event.factory.DamageEvent;
 import jswtorparser.event.factory.HealEvent;
 
 
-
+/**
+ * 
+ * @author Brandon Bluemner
+ *
+ */
 public interface SwtorParserListener {
 	/*
 	 * Player Code

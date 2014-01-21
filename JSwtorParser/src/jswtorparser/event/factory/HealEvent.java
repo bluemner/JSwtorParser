@@ -19,6 +19,12 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
+/**
+ * <b>HealEvent:</b> Event that stores state of Heals<br>
+ * <b>Extends:</b>  {@link SwtorParserEvent}
+ * @author Brandon Bluemner
+ * 
+ */
 public class HealEvent extends SwtorParserEvent {
 	
 

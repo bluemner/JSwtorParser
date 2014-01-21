@@ -17,6 +17,13 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 */
+/**
+ * /**
+ * <b>SwtorParserEvent </b> Parent Class to all events<br>
+ * 
+ * @author Brandon Bluemner
+ * 
+ */
 public abstract  class SwtorParserEvent {
 
 	private SwtorEventType et;
@@ -25,7 +32,7 @@ public abstract  class SwtorParserEvent {
 		this.et=et;
 	}
 	/**
-	 * Code to run during event
+	 * Code to run during event 
 	 */
 	protected abstract void run();
 	/**
