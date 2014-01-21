@@ -22,7 +22,7 @@ under the License.
  * <b>DamageEvent:</b> Event that stores state of Damage<br>
  * <b>Extends:</b>  {@link SwtorParserEvent}
  * @author Brandon Bluemner
- * 
+ 
  */
 public class DamageEvent extends SwtorParserEvent{
 	
