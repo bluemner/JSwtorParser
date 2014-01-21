@@ -30,8 +30,7 @@ public class DamageEvent extends SwtorParserEvent{
 	private boolean isPlayer;
 	private boolean isGiven;
 
-	public DamageEvent( long value, boolean isPlayer , boolean isGiven){
-		
+	public DamageEvent( long value, boolean isPlayer , boolean isGiven){	
 		super(SwtorEventType.DAMAGE);
 		this.value=value;
 		this.isPlayer=isPlayer;
