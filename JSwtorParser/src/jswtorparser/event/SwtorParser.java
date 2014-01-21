@@ -1,13 +1,14 @@
 package jswtorparser.event;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jswtorparser.event.factory.CombatEvent;
+import jswtorparser.event.factory.SwtorEventFactory;
 import jswtorparser.event.factory.SwtorEventType;
+import jswtorparser.event.factory.SwtorParserEvent;
 
 /*
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +24,9 @@ import jswtorparser.event.factory.SwtorEventType;
  limitations under the License.
  */
 /**
- * <b>SwtorParser:</b> Creates an instance that allows you to parse information from
+ * <b>SwtorParser:</b> Creates an instance that allows you to parse information
+ * from
+ * 
  * @author Brandon Bluemner
  */
 public class SwtorParser {
@@ -31,38 +34,39 @@ public class SwtorParser {
 	private boolean isRunning;
 	private String playerName;
 	private Set<SwtorParserListener> listeners;
-	
-//	
-//	/*
-//	 *Fight
-//	 */
-//	  int DAMAGE_GIVEN;
-//	  int DAMAGE_RECIVED;
-//	  int HEALS_GIVEN;
-//	  int HEALS_RECIVED;
-//	  int HEALS_THREAT;
-//	  int DAMAGE_THREAT;
-//	  int Threat; //Heals + Damage
-//	  int COMPANION_DAMAGE_GIVEN;
-//	  int COMPANION_DAMAGE_RECIVED;
-//	  int COMPANION_HEALS_GIVEN;
-//	  int COMPANION_HEALS_RECIVED;
-//	  int COMPANION_Threat;
-//	
-//	/*
-//	 * Total 
-//	 */
-//	  long Total_DAMAGE_GIVEN;
-//	  long Total_DAMAGE_RECIVED;
-//	  long Total_HEALS_GIVEN;
-//	  long Total_HEALS_RECIVED;
-//	  long Total_Threat;
-//	
-	
-	
+	boolean DEBUG=true;
+
+	//
+	// /*
+	// *Fight
+	// */
+	// int DAMAGE_GIVEN;
+	// int DAMAGE_RECIVED;
+	// int HEALS_GIVEN;
+	// int HEALS_RECIVED;
+	// int HEALS_THREAT;
+	// int DAMAGE_THREAT;
+	// int Threat; //Heals + Damage
+	// int COMPANION_DAMAGE_GIVEN;
+	// int COMPANION_DAMAGE_RECIVED;
+	// int COMPANION_HEALS_GIVEN;
+	// int COMPANION_HEALS_RECIVED;
+	// int COMPANION_Threat;
+	//
+	// /*
+	// * Total
+	// */
+	// long Total_DAMAGE_GIVEN;
+	// long Total_DAMAGE_RECIVED;
+	// long Total_HEALS_GIVEN;
+	// long Total_HEALS_RECIVED;
+	// long Total_Threat;
+	//
+
 	public SwtorParser() {
-		this.listeners= new HashSet<SwtorParserListener>();
+		this.listeners = new HashSet<SwtorParserListener>();
 	}
+
 	/**
 	 * @return the isRunning
 	 */
@@ -70,8 +74,32 @@ public class SwtorParser {
 		return isRunning;
 	}
 
+	/**
+	 * Adds the specified listener
+	 * 
+	 * @param l
+	 *            Listener to add
+	 */
+	public void addSwtorParserListener(SwtorParserListener l) {
+		this.listeners.add(l);
+	}
 
+	/**
+	 * Removes the specified listener
+	 * 
+	 * @param l
+	 *            The Listener to be removed
+	 */
+	public void removeSwtorParserListener(SwtorParserListener l) {
+		this.listeners.remove(l);
+	}
 
+	/**
+	 * Removes all listeners
+	 */
+	public void clearSwtorParserListener() {
+		this.listeners.clear();
+	}
 
 	/**
 	 * @param isRunning
@@ -80,31 +108,160 @@ public class SwtorParser {
 	public void setRunning(boolean isRunning) {
 		this.isRunning = isRunning;
 	}
+
+	/*
+	 * Code to fire events
+	 */
+
+	/*
+	 * Player Code
+	 */
+	public void fireHealGiven(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.healGiven(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireHealRecevied(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.healRecevied(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireDamageGiven(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.damageGiven(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireDamageRecvied(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.damageRecvied(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireThreat(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.threat(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireDeath(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.death(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	/*
+	 * Companion
+	 */
+	public void fireCompanionHealGiven(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.companionHealGiven(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireCompanionHealRecevied(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.companionHealRecevied(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireCompanionDamageGiven(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.companionDamageGiven(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireCompanionDamageRecvied(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.companionDamageRecvied(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireCompanionThreat(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.companionThreat(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireCompanionDeath(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.companionDeath(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	/*
+	 * Action
+	 */
+	public void fireClear() {
+		for (SwtorParserListener l : this.listeners) {
+			l.clear();
+		}
+	}
+
+	public void fireCombatStarted(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.combatStarted(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireCombatEnded(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.combatEnded(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireCombatPaused(StateChange sc) {
+		for (SwtorParserListener l : this.listeners) {
+			l.combatPaused(SwtorEventFactory.newEvent(sc));
+		}
+	}
+
+	public void fireUpdate() {
+		for (SwtorParserListener l : this.listeners) {
+			l.update();
+		}
+	}
+
+	/*
+	 * End of events
+	 */
+
 	/**
 	 * 
-	 * @param s String to parse
+	 * @param s
+	 *            String to parse
 	 */
 	public void parse(String s) {
 		/*
-		 * [23:00:17.885]
-		 * [@Försäkën:Treek {3275183146139648}]
-		 * [@Försäkën:Treek{3275183146139648}]
-		 * [Fektur Dart {3279138811019264}]
-		 * [ApplyEffect * {836045448945477}: Heal {836045448945500}]
-		 * (87)
-		 * <11>
+		 * [23:00:17.885] [@Försäkën:Treek {3275183146139648}]
+		 * [@Försäkën:Treek{3275183146139648}] [Fektur Dart {3279138811019264}]
+		 * [ApplyEffect * {836045448945477}: Heal {836045448945500}] (87) <11>
 		 */
 
 		StateChange sc1 = new StateChange();
-		String reg1 = "(\\[.*?\\])", ws = "\\s*", reg2 = "(\\(.*\\))?", reg3 = "(<[^>]+>)?", 
-				line = reg1	+ ws+ reg1+ ws+ reg1+ ws+ reg1+ ws+ reg1+ ws+ reg2+ ws + reg3 + ws;
+		String reg1 = "(\\[.*?\\])", ws = "\\s*", reg2 = "(\\(.*\\))?", reg3 = "(<[^>]+>)?", line = reg1
+				+ ws
+				+ reg1
+				+ ws
+				+ reg1
+				+ ws
+				+ reg1
+				+ ws
+				+ reg1
+				+ ws
+				+ reg2
+				+ ws + reg3 + ws;
 
-		Pattern p = Pattern.compile(line, Pattern.CASE_INSENSITIVE| Pattern.DOTALL);
+		Pattern p = Pattern.compile(line, Pattern.CASE_INSENSITIVE
+				| Pattern.DOTALL);
 		Matcher m = p.matcher(s);
 		String[] group = new String[8];
 		if (m.find()) {
 			for (int i = 0; i < 8; ++i) {
 				group[i] = m.group(i);
+				if(DEBUG)
 				_(m.group(i));
 			}
 		} else
@@ -116,7 +273,8 @@ public class SwtorParser {
 		/*
 		 * 2 Source
 		 */
-		line = "(\\[)" + "(@)?" + "([^:]*)" + "(:)?" + "([^\\{]*)?" + "(\\{)?"+ "(\\d+)?" + "(\\})?" + "(\\])";
+		line = "(\\[)" + "(@)?" + "([^:]*)" + "(:)?" + "([^\\{]*)?" + "(\\{)?"
+				+ "(\\d+)?" + "(\\})?" + "(\\])";
 		_("");
 		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 		m = p.matcher(group[2]);
@@ -151,7 +309,7 @@ public class SwtorParser {
 					sc1.isPlayer = false;
 				} else
 					sc1.isPlayer = true;
-		}
+			}
 
 		} else
 			System.out.println("bad 3 :(");
@@ -159,75 +317,236 @@ public class SwtorParser {
 		/*
 		 * 4 Ability
 		 */
-		line = "(\\[)" + "([^\\{]*)?" + "(\\{)?" + "(\\d+)?" + "(\\})?"+ "(\\])";
+		line = "(\\[)" + "([^\\{]*)?" + "(\\{)?" + "(\\d+)?" + "(\\})?"
+				+ "(\\])";
 
 		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 		m = p.matcher(group[4]);
 		if (m.find()) {
-			if(m.group(2)!=null && !( m.group(2).isEmpty())){
-				sc1.ability=m.group(2);
+			if (m.group(2) != null && !(m.group(2).isEmpty())) {
+				sc1.ability = m.group(2);
 			}
 		} else
 			System.out.println("bad 4:(");
-		
-		
+
 		/*
 		 * 5 Type
 		 */
-		
-		
-		line = "(\\[)" + "([^\\{]*)?" + "(\\{)?" + "(\\d+)?" + "(\\})?"	+ "(:)?" + "([^\\{]*)?" + "(\\d)" + "(\\])";
+		//_("G5\n" + group[5] + "\n");
+		line = "(\\[)?" + "([^\\{]*)?" + "(\\{)?" + "(\\d+)?" + "(\\})?"
+				+ "(:)?" + "([^\\{]*)?" + "(\\d)?" + "(\\])?";
+
 		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 		m = p.matcher(group[5]);
 		if (m.find()) {
-			String event =m.group(2);
+			// for(int i=0; i<8;++i){
+			// _(m.group(i));
+			// }
+			// String event =m.group(2);
 			String type = m.group(7);
-			
-			if(event==null || type ==null){
-				
-			}else{
-				type=type.trim();
-				type=type.toUpperCase();
-				if(type.contains("EnterCombat")){
-					sc1.type=SwtorEventType.COMBAT;
-					sc1.state=CombatEvent.STARTED;
-					
-					//TODO Fire Event
-					
-				}else if(type.contains("ExitCombat")){
-					sc1.type=SwtorEventType.COMBAT;
-					sc1.state=CombatEvent.STOPED;
-				
-					//TODO Fire Event
-				}
-				else if(type.contains("HEALS")){
-					sc1.type=SwtorEventType.HEALS;
-					//TODO Fire Event
-				}
-				else if(type.contains("DAMAGE")){
-					sc1.type=SwtorEventType.DAMAGE;
-					//TODO Fire Event
-				}
-				else if(type.contains("Threat")){
-					sc1.type=SwtorEventType.THREAT;
-					//TODO Fire Event
-				}else if(type.contains("DEATH")){
-					sc1.type=SwtorEventType.DEATH;
-					//TODO Fire Event
+
+			if (type == null) {
+				return;
+			} else {
+				type = type.trim();
+				type = type.toUpperCase();
+				if (type.contains("EnterCombat")) {
+					sc1.type = SwtorEventType.COMBAT;
+					sc1.state = CombatEvent.STARTED;
+
+					this.fireCombatStarted(sc1);
+
+				} else if (type.contains("ExitCombat")) {
+					sc1.type = SwtorEventType.COMBAT;
+					sc1.state = CombatEvent.STOPED;
+
+					// TODO Fire Event
+					this.fireCombatEnded(sc1);
+				} else if (type.contains("HEAL")) {
+					sc1.type = SwtorEventType.HEALS;
+					// TODO Fire Event
+					if (sc1.isPlayer) {
+						/*
+						 * Is the player
+						 */
+						if (sc1.isGiving) {
+							this.fireHealGiven(sc1);
+						}
+
+						else {
+							this.fireHealRecevied(sc1);
+						}
+
+					} else {
+						/*
+						 * Not Player Might be companion
+						 */
+						if (sc1.isGiving) {
+							this.fireCompanionHealGiven(sc1);
+						}
+
+						else {
+							this.fireCompanionHealRecevied(sc1);
+						}
+					}//
+				} else if (type.contains("DAMAGE")) {
+					sc1.type = SwtorEventType.DAMAGE;
+					// TODO Fire Event
+					if (sc1.isPlayer) {
+						/*
+						 * Is the player
+						 */
+						if (sc1.isGiving) {
+							this.fireDamageGiven(sc1);
+						}
+
+						else {
+							this.fireDamageRecvied(sc1);
+						}
+
+					} else {
+						/*
+						 * Not Player Might be companion
+						 */
+						if (sc1.isGiving) {
+							this.fireCompanionDamageGiven(sc1);
+						}
+
+						else {
+							this.fireCompanionDamageRecvied(sc1);
+
+						}
+					}//
+				} else if (type.contains("Threat")) {
+					sc1.type = SwtorEventType.THREAT;
+					// TODO Fire Event
+					if (sc1.isPlayer)
+						this.fireThreat(sc1);
+					else
+						this.fireCompanionThreat(sc1);
+				} else if (type.contains("DEATH")) {
+					sc1.type = SwtorEventType.DEATH;
+					// TODO Fire Event
+					if (sc1.isPlayer)
+						this.fireDeath(sc1);
+					else
+						this.fireCompanionDeath(sc1);
 				}
 			}
-				
-			
+
 		} else
 			System.out.println("bad 5:(");
-		
-		
-		
+
 	}
 
 	public static void main(String[] args) {
+
 		String test = "[23:00:17.885] [@Försäkën:Treek {3275183146139648}] [@Försäkën:Treek {3275183146139648}] [Fektur Dart {3279138811019264}] [ApplyEffect {836045448945477}: Heal {836045448945500}] (87) <11>";
 		SwtorParser p = new SwtorParser();
+		p.addSwtorParserListener(new SwtorParserListener() {
+
+			@Override
+			public void healGiven(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void healRecevied(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void damageGiven(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void damageRecvied(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void threat(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void death(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void companionHealGiven(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void companionHealRecevied(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void companionDamageGiven(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void companionDamageRecvied(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void companionThreat(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void companionDeath(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void clear() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void combatStarted(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void combatEnded(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void combatPaused(SwtorParserEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.getEventType() + "Fired");
+			}
+
+			@Override
+			public void update() {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		p.parse(test);
 		test = "[23:00:17.885] [@Försäkën:Treek {3275183146139648}] [@Försäkën:Treek {3275183146139648}] [Fektur Dart {3279138811019264}] [ApplyEffect {836045448945477}: Heal {836045448945500}] (87) ";
 
@@ -241,10 +560,12 @@ public class SwtorParser {
 	private void _(String s) {
 		System.out.println(s);
 	}
+
 	/**
-	 * State Change: Helper Class to hold value of a line of parse 
-	 * @author Brandon  Bluemner
-	 *
+	 * State Change: Helper Class to hold value of a line of parse
+	 * 
+	 * @author Brandon Bluemner
+	 * 
 	 */
 	public class StateChange {
 		protected int value;
@@ -252,7 +573,7 @@ public class SwtorParser {
 		protected boolean isPlayer, isGiving;
 		protected byte state;
 		protected String ability;
-		
+
 		/**
 		 * Creates an instance of State Change
 		 */
@@ -324,7 +645,10 @@ public class SwtorParser {
 			return state;
 		}
 
+		public String getAbility() {
+			return ability;
+		}
+
 	}
-	
-	
+
 }

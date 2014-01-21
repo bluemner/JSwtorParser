@@ -41,5 +41,5 @@ public enum SwtorEventType {
 	 * BASE EVENTS
 	 */
 	CLEAR,
-	UPDATE, 
+	UPDATE, UNKNOWN, 
 }

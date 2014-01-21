@@ -1,7 +1,6 @@
 package jswtorparser.event;
 
-import jswtorparser.event.factory.DamageEvent;
-import jswtorparser.event.factory.HealEvent;
+import jswtorparser.event.factory.*;
 
 
 /**
@@ -11,27 +10,36 @@ import jswtorparser.event.factory.HealEvent;
  */
 public interface SwtorParserListener {
 	/*
+	 * All events must extend SwtorParserEvent so we don't have to specify children here, despite the factory is returning them...
+	 */
+	/*
 	 * Player Code
 	 */
-	public void healGiven(HealEvent e);
-	public void healRecevied(HealEvent e);
-	public void damageGiven(DamageEvent e);
-	public void damageRecvied(DamageEvent e);
-	public void threat(SwtorParser p);
+	public void healGiven(SwtorParserEvent e);
+	public void healRecevied(SwtorParserEvent e);
+	
+	public void damageGiven(SwtorParserEvent e);
+	public void damageRecvied(SwtorParserEvent e);
+	
+	public void threat(SwtorParserEvent e);
+	public void death(SwtorParserEvent e);
 	/*
 	 * Companion
 	 */
-	public void companionHealGiven(HealEvent e);
-	public void companionHealRecevied(HealEvent e);
-	public void companionHamageGiven(DamageEvent e);
-	public void companionHamageRecvied(DamageEvent e);
-	public void companionThreat(SwtorParser p);
+	public void companionHealGiven(SwtorParserEvent e);
+	public void companionHealRecevied(SwtorParserEvent e);
 	
+	public void companionDamageGiven(SwtorParserEvent e);
+	public void companionDamageRecvied(SwtorParserEvent e);
+	
+	public void companionThreat(SwtorParserEvent e);
+	public void companionDeath(SwtorParserEvent e);
 	/*
 	 * Action
 	 */
 	public void clear();
-	public void combatStarted(SwtorParser p);
-	public void combatEnded(SwtorParser p);
-	public void update(SwtorParser p);
+	public void combatStarted(SwtorParserEvent e);
+	public void combatEnded(SwtorParserEvent e);
+	public void combatPaused(SwtorParserEvent e);
+	public void update();
 }

@@ -15,32 +15,40 @@ import jswtorparser.event.SwtorParser;
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
+/**
+ * 
+ * @author Brandon Bluemner
+ *
+ */
 public class SwtorEventFactory {
 		/**
 		 * 
 		 * @param sc State Change Provided In jwtorparser.event.SwtorParser.statChange
-		 * @return
+		 * @return Correct Event State Based on Parse information
 		 */
 		public static SwtorParserEvent newEvent(SwtorParser.StateChange sc){
 			SwtorParserEvent ev = null;
 			switch(sc.getType()){
-			case HEALS: ev = new HealEvent(sc.getValue(),sc.isPlayer(),sc.isGiving());
+			case HEALS: ev = new HealEvent(sc.getValue(),sc.isPlayer(),sc.isGiving(),sc.getAbility());
 						break;
-			case DAMAGE: ev = new DamageEvent(sc.getValue(),sc.isPlayer(),sc.isGiving());
+			case DAMAGE: ev = new DamageEvent(sc.getValue(),sc.isPlayer(),sc.isGiving(),sc.getAbility());
 						break;
 			case THREAT: ev = new ThreatEvent(sc.getValue(),sc.isPlayer());
 						break;
 			case COMBAT:
 						 ev = new CombatEvent(sc.getState());
 						break;
+			case DEATH:
+						ev= new DeathEvent(sc.isPlayer());
 			case UPDATE:
 						break;
 			case CLEAR: 
 						break;
 			default:
-				break;
+				ev=new UnknownEvent();
 			}
 			
-			return ev;
+			return ev ;
 		}
 }

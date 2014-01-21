@@ -29,12 +29,14 @@ public class DamageEvent extends SwtorParserEvent{
 	private long value;
 	private boolean isPlayer;
 	private boolean isGiven;
+	private String abilityName;
 
-	public DamageEvent( long value, boolean isPlayer , boolean isGiven){	
+	public DamageEvent( long value, boolean isPlayer , boolean isGiven, String abilityName){	
 		super(SwtorEventType.DAMAGE);
 		this.value=value;
 		this.isPlayer=isPlayer;
 		this.isGiven=isGiven;
+		this.abilityName=abilityName;
 	}
 	
 	/**

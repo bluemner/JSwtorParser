@@ -31,14 +31,16 @@ public class HealEvent extends SwtorParserEvent {
 	long value;
 	boolean isPlayer;
 	boolean isGiven;
+	String  abilityName;
 	/**
 	 * 
 	 * 
-	 * @param value amount of heals recvied
+	 * @param value amount of heals received
 	 * @param isPlayer True if player is the one selected false for companion
 	 * @param isGiven true if giving heals false is receiving 
+	 * @param abilityName the ability that is being applied during this state
 	 */
-	public HealEvent( long value, boolean isPlayer , boolean isGiven){
+	public HealEvent( long value, boolean isPlayer , boolean isGiven,String abilityName){
 		super(SwtorEventType.HEALS);
 		this.value=value;
 		this.isPlayer=isPlayer;
