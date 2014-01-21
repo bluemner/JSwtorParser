@@ -25,7 +25,6 @@ import jswtorparser.event.factory.SwtorEventType;
 /**
  * <b>SwtorParser:</b> Creates an instance that allows you to parse information from
  * @author Brandon Bluemner
- *
  */
 public class SwtorParser {
 
