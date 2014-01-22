@@ -98,4 +98,10 @@ public class CombatEvent extends SwtorParserEvent {
 		return false;
 	}
 
+	@Override
+	public int threat() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

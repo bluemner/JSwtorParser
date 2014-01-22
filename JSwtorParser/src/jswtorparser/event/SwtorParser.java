@@ -343,7 +343,9 @@ public class SwtorParser {
 		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 		m = p.matcher(group[6]);
 		if (m.find()) {
-			
+			if(m.group(2)!=null){
+				sc1.value=Integer.parseInt(m.group(2));
+			}
 		} else
 			System.out.println("bad 6:(");
 		/*
@@ -356,7 +358,9 @@ public class SwtorParser {
 		
 		m = p.matcher(group[7]);
 		if (m.find()) {
-			
+			if(m.group(2)!=null){
+				sc1.threat=Integer.parseInt(m.group(2));
+			}
 		} else
 			System.out.println("bad 7:(");
 		}
@@ -601,11 +605,12 @@ public class SwtorParser {
 	 * 
 	 */
 	public class StateChange {
-		protected int value;
-		protected SwtorEventType type;
-		protected boolean isPlayer, isGiving,isCompanion;
-		protected byte state;
-		protected String ability;
+		protected int threat=0;
+		protected int value=0;
+		protected SwtorEventType type=SwtorEventType.UNKNOWN;
+		protected boolean isPlayer =false, isGiving=false,isCompanion=false;
+		protected byte state=-1;
+		protected String ability="";
 
 		/**
 		 * Creates an instance of State Change
@@ -686,6 +691,27 @@ public class SwtorParser {
 
 			return isCompanion;
 		}
+
+		public int getThreat() {
+			return threat;
+		}
+
+		public void setThreat(int threat) {
+			this.threat = threat;
+		}
+
+		public void setCompanion(boolean isCompanion) {
+			this.isCompanion = isCompanion;
+		}
+
+		public void setState(byte state) {
+			this.state = state;
+		}
+
+		public void setAbility(String ability) {
+			this.ability = ability;
+		}
+		
 
 	}
 

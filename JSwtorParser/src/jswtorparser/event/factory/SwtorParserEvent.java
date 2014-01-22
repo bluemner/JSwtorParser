@@ -83,7 +83,12 @@ public abstract  class SwtorParserEvent {
 	 * @return the abilities name
 	 */
 	public abstract String getAbilityName() ;
-		
+	
+	/**
+	 * 
+	 * @return value of threat gained by event
+	 */
+	public abstract int threat();
 	
 	
 }

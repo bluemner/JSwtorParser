@@ -77,6 +77,12 @@ public class DeathEvent extends SwtorParserEvent {
 			return state.isCompanion();
 		}
 
+		@Override
+		public int threat() {
+			// TODO Auto-generated method stub
+			return state.getThreat();
+		}
+
 		
 		
 }

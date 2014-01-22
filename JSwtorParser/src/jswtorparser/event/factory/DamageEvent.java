@@ -74,4 +74,10 @@ public class DamageEvent extends SwtorParserEvent{
 		// TODO Auto-generated method stub
 		return state.isCompanion();
 	}
+
+	@Override
+	public int threat() {
+		// TODO Auto-generated method stub
+		return state.getThreat();
+	}
 }
