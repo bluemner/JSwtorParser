@@ -27,7 +27,7 @@ under the License.
 public class UnknownEvent extends SwtorParserEvent {
 
 		public UnknownEvent(){
-			super(SwtorEventType.UNKNOWN);
+			super(SwtorEventType.UNKNOWN,null);
 		}
 
 		@Override
@@ -35,4 +35,35 @@ public class UnknownEvent extends SwtorParserEvent {
 			// TODO Auto-generated method stub
 			
 		}
+		
+		/**
+		 * 
+		 * @return <b>true</b> if the charter is the player false otherwise;
+		 */
+		@Override
+		public boolean isPlayer(){
+			return false;
+		}
+		/**
+		 * @return -3
+		 */
+		@Override
+		public long getValue() {
+			return -3;
+		}
+		@Override
+		public boolean isGiven() {
+			return false;
+		}
+		@Override
+		public String getAbilityName() {
+			return "Unknown";
+		}
+
+		@Override
+		public boolean isCompanion() {
+			// TODO Auto-generated method stub
+			return state.isCompanion();
+		}
+		
 }

@@ -1,5 +1,7 @@
 package jswtorparser.event.factory;
 
+import jswtorparser.event.SwtorParser.StateChange;
+
 
 /*
 Licensed to the Apache Software Foundation (ASF) under one
@@ -28,28 +30,50 @@ under the License.
 public class HealEvent extends SwtorParserEvent {
 	
 
-	long value;
-	boolean isPlayer;
-	boolean isGiven;
-	String  abilityName;
+
 	/**
 	 * 
-	 * 
-	 * @param value amount of heals received
-	 * @param isPlayer True if player is the one selected false for companion
-	 * @param isGiven true if giving heals false is receiving 
-	 * @param abilityName the ability that is being applied during this state
+	 * @param et {@link SwtorEventType}
+	 * @param state {@link StateChange} of the event
 	 */
-	public HealEvent( long value, boolean isPlayer , boolean isGiven,String abilityName){
-		super(SwtorEventType.HEALS);
-		this.value=value;
-		this.isPlayer=isPlayer;
-		this.isGiven=isGiven;
+	public HealEvent( StateChange sc){
+		super(SwtorEventType.HEALS, sc);
+		
 	}
 
 	@Override
 	protected void run() {
 		
+	}
+
+	@Override
+	public boolean isPlayer() {
+		// TODO Auto-generated method stub
+		return state.isPlayer();
+	}
+
+	@Override
+	public long getValue() {
+		// TODO Auto-generated method stub
+		return state.getValue();
+	}
+
+	@Override
+	public boolean isGiven() {
+		// TODO Auto-generated method stub
+		return state.isGiving();
+	}
+
+	@Override
+	public String getAbilityName() {
+		// TODO Auto-generated method stub
+		return state.getAbility();
+	}
+
+	@Override
+	public boolean isCompanion() {
+		// TODO Auto-generated method stub
+		return state.isCompanion();
 	}
 	
 }

@@ -1,5 +1,10 @@
 package jswtorparser.event.factory;
 
+/**
+ * Stores all the event types needed for the Event factory
+ * @author bluemner
+ *
+ */
 public enum SwtorEventType {
 	/*
 	 * Player

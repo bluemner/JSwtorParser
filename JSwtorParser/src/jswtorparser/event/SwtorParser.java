@@ -286,7 +286,9 @@ public class SwtorParser {
 			} else if (playerName.equals(m.group(3))) {
 				sc1.isGiving = true;
 				if (m.group(4).contains(":")) {
+					
 					sc1.isPlayer = false;
+					sc1.isCompanion=true;
 				} else
 					sc1.isPlayer = true;
 
@@ -307,6 +309,7 @@ public class SwtorParser {
 
 				if (m.group(4).contains(":")) {
 					sc1.isPlayer = false;
+					sc1.isCompanion=true;
 				} else
 					sc1.isPlayer = true;
 			}
@@ -328,9 +331,38 @@ public class SwtorParser {
 			}
 		} else
 			System.out.println("bad 4:(");
-
 		/*
-		 * 5 Type
+		 * 6 Value
+		 * TODO Value
+		 */
+		line ="(\\()"+"(\\d+)?"+"(\\*)?"+"(\\))";
+		
+		
+		
+		
+		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		m = p.matcher(group[6]);
+		if (m.find()) {
+			
+		} else
+			System.out.println("bad 6:(");
+		/*
+		 * 7 Threat
+		 * TODO Threat
+		 */
+		if(group[7]!=null){
+		line ="(\\<)?"+"(\\d+)?"+"(\\*)?"+"(\\>)?";
+		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		
+		m = p.matcher(group[7]);
+		if (m.find()) {
+			
+		} else
+			System.out.println("bad 7:(");
+		}
+		/*
+		 * 5 Type 
+		 *last because we use this to fire event
 		 */
 		//_("G5\n" + group[5] + "\n");
 		line = "(\\[)?" + "([^\\{]*)?" + "(\\{)?" + "(\\d+)?" + "(\\})?"
@@ -360,11 +392,11 @@ public class SwtorParser {
 					sc1.type = SwtorEventType.COMBAT;
 					sc1.state = CombatEvent.STOPED;
 
-					// TODO Fire Event
+					
 					this.fireCombatEnded(sc1);
 				} else if (type.contains("HEAL")) {
 					sc1.type = SwtorEventType.HEALS;
-					// TODO Fire Event
+				
 					if (sc1.isPlayer) {
 						/*
 						 * Is the player
@@ -436,7 +468,8 @@ public class SwtorParser {
 
 		} else
 			System.out.println("bad 5:(");
-
+		
+		
 	}
 
 	public static void main(String[] args) {
@@ -570,7 +603,7 @@ public class SwtorParser {
 	public class StateChange {
 		protected int value;
 		protected SwtorEventType type;
-		protected boolean isPlayer, isGiving;
+		protected boolean isPlayer, isGiving,isCompanion;
 		protected byte state;
 		protected String ability;
 
@@ -647,6 +680,11 @@ public class SwtorParser {
 
 		public String getAbility() {
 			return ability;
+		}
+
+		public boolean isCompanion() {
+
+			return isCompanion;
 		}
 
 	}

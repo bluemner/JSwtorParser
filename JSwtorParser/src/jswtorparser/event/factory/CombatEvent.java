@@ -1,5 +1,7 @@
 package jswtorparser.event.factory;
 
+import jswtorparser.event.SwtorParser.StateChange;
+
 
 /*
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,15 +25,20 @@ package jswtorparser.event.factory;
  */
 public class CombatEvent extends SwtorParserEvent {
 
-	private byte combat;
+	
 	
 	public final static byte  STARTED =0;
 	public final static byte  STOPED =1;
 	public final static byte  PAUSED =2;
 	
-	public CombatEvent( byte combat) {
-		super(SwtorEventType.COMBAT);
-		this.combat = combat;
+	/**
+	 * 
+	 * @param et {@link SwtorEventType}
+	 * @param state {@link StateChange} of the event
+	 */
+	public CombatEvent( StateChange sc) {
+		super(SwtorEventType.COMBAT,sc);
+	
 	}
 	
 	/**
@@ -39,14 +46,14 @@ public class CombatEvent extends SwtorParserEvent {
 	 * @return the combat Byte 0 Started , 1 STOPED, 2 PAUSED
 	 */
 	public byte getCombat() {
-		return combat;
+		return state.getState();
 	}
 	/**
 	 * 
 	 * @return String of Combat State State
 	 */
 	public String getCombatString(){
-		switch(combat){
+		switch(state.getState()){
 		case STARTED: return "Strated";
 		case STOPED:  return "Stoped";
 		case PAUSED:  return "PAUSED";
@@ -59,6 +66,36 @@ public class CombatEvent extends SwtorParserEvent {
 	protected void run() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean isPlayer() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public long getValue() {
+		// TODO Auto-generated method stub
+		return state.getState();
+	}
+
+	@Override
+	public boolean isGiven() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getAbilityName() {
+		// TODO Auto-generated method stub
+		return this.state.getAbility();
+	}
+
+	@Override
+	public boolean isCompanion() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

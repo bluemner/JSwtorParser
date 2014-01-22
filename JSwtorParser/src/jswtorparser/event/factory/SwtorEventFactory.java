@@ -17,7 +17,7 @@ import jswtorparser.event.SwtorParser;
  */
 
 /**
- * 
+ * Factory For Creating Event
  * @author Brandon Bluemner
  *
  */
@@ -25,22 +25,22 @@ public class SwtorEventFactory {
 		/**
 		 * 
 		 * @param sc State Change Provided In jwtorparser.event.SwtorParser.statChange
-		 * @return Correct Event State Based on Parse information
+		 * @return Correct Event State Based on Parse information & State
 		 */
 		public static SwtorParserEvent newEvent(SwtorParser.StateChange sc){
 			SwtorParserEvent ev = null;
 			switch(sc.getType()){
-			case HEALS: ev = new HealEvent(sc.getValue(),sc.isPlayer(),sc.isGiving(),sc.getAbility());
+			case HEALS: ev = new HealEvent(sc);
 						break;
-			case DAMAGE: ev = new DamageEvent(sc.getValue(),sc.isPlayer(),sc.isGiving(),sc.getAbility());
+			case DAMAGE: ev = new DamageEvent(sc);
 						break;
-			case THREAT: ev = new ThreatEvent(sc.getValue(),sc.isPlayer());
+			case THREAT: ev = new ThreatEvent(sc);
 						break;
 			case COMBAT:
-						 ev = new CombatEvent(sc.getState());
+						 ev = new CombatEvent(sc);
 						break;
 			case DEATH:
-						ev= new DeathEvent(sc.isPlayer());
+						ev= new DeathEvent(sc);
 			case UPDATE:
 						break;
 			case CLEAR: 

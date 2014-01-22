@@ -1,4 +1,6 @@
 package jswtorparser.event.factory;
+
+import jswtorparser.event.SwtorParser.StateChange;
 /*
  Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -26,40 +28,50 @@ under the License.
  */
 public class DamageEvent extends SwtorParserEvent{
 	
-	private long value;
-	private boolean isPlayer;
-	private boolean isGiven;
-	private String abilityName;
-
-	public DamageEvent( long value, boolean isPlayer , boolean isGiven, String abilityName){	
-		super(SwtorEventType.DAMAGE);
-		this.value=value;
-		this.isPlayer=isPlayer;
-		this.isGiven=isGiven;
-		this.abilityName=abilityName;
-	}
 	
 	/**
-	 * @return the value
+	 * 
+	 * @param et {@link SwtorEventType}
+	 * @param state {@link StateChange} of the event
 	 */
-	public long getValue() {
-		return value;
+	public DamageEvent(StateChange sc){	
+		super(SwtorEventType.DAMAGE,sc);
+		
 	}
-	/**
-	 * @return the isPlayer
-	 */
-	public boolean isPlayer() {
-		return isPlayer;
-	}
-	/**
-	 * @return the isGiven
-	 */
-	public boolean isGiven() {
-		return isGiven;
-	}
+	
 	@Override
 	protected void run() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isPlayer() {
+		// TODO Auto-generated method stub
+		return state.isPlayer();
+	}
+
+	@Override
+	public long getValue() {
+		// TODO Auto-generated method stub
+		return state.getValue();
+	}
+
+	@Override
+	public boolean isGiven() {
+		// TODO Auto-generated method stub
+		return state.isGiving();
+	}
+
+	@Override
+	public String getAbilityName() {
+		// TODO Auto-generated method stub
+		return state.getAbility();
+	}
+
+	@Override
+	public boolean isCompanion() {
+		// TODO Auto-generated method stub
+		return state.isCompanion();
 	}
 }

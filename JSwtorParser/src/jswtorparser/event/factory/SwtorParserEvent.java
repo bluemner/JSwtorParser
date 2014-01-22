@@ -1,4 +1,7 @@
 package jswtorparser.event.factory;
+
+import jswtorparser.event.SwtorParser.StateChange;
+
 /*
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -27,9 +30,16 @@ under the License.
 public abstract  class SwtorParserEvent {
 
 	private SwtorEventType et;
+	protected StateChange state;
 	
-	public SwtorParserEvent(SwtorEventType et){
+	/**
+	 * 
+	 * @param et {@link SwtorEventType}
+	 * @param state {@link StateChange} of the event
+	 */
+	public SwtorParserEvent(SwtorEventType et, StateChange state){
 		this.et=et;
+		this.state=state;
 	}
 	/**
 	 * Code to run during event 
@@ -47,6 +57,33 @@ public abstract  class SwtorParserEvent {
 	public void setEventType(SwtorEventType et) {
 		this.et = et;
 	}
+	/**
+	 * 
+	 * @return <b>True</b> if the player caused the event </br> <b>False</b> if other caused ;
+	 */
+	public abstract boolean isPlayer();
+	/**
+	 * 
+	 * @return <b>True</b> if the player companion caused the event </br> <b>False</b> if other caused;
+	 */
+	public abstract boolean isCompanion();
+	/**
+	 * 
+	 * @return the value of the event 
+	 */
+	public abstract long getValue() ;
+	/**
+	 * 
+	 * @return <b>True:</b> if the player is causing the action</br><b>False:</b> if the player is receiving the action
+	 */
+	public abstract boolean isGiven() ;
+	
+	/**
+	 * 
+	 * @return the abilities name
+	 */
+	public abstract String getAbilityName() ;
+		
 	
 	
 }

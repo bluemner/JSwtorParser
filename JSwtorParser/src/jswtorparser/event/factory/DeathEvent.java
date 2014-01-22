@@ -1,4 +1,7 @@
 package jswtorparser.event.factory;
+
+import jswtorparser.event.SwtorParser.StateChange;
+
 /*
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -25,11 +28,15 @@ under the License.
  */
 public class DeathEvent extends SwtorParserEvent {
 
-		boolean isPlayer;
-		public DeathEvent(boolean isPlayer){
+	/**
+	 * 
+	 * @param et {@link SwtorEventType}
+	 * @param state {@link StateChange} of the event
+	 */
+		public DeathEvent(StateChange sc){
 			
-			super(SwtorEventType.DEATH);
-			this.isPlayer=isPlayer;
+			super(SwtorEventType.DEATH, sc);
+			
 		}
 
 		@Override
@@ -38,8 +45,38 @@ public class DeathEvent extends SwtorParserEvent {
 			
 		}
 
+		@Override
 		public boolean isPlayer() {
-			return isPlayer;
+			// TODO Auto-generated method stub
+			return state.isPlayer();
 		}
+
+		@Override
+		public long getValue() {
+			// TODO Auto-generated method stub
+			return -1;
+		}
+
+		@Override
+		public boolean isGiven() {
+			// TODO Auto-generated method stub
+			return state.isGiving();
+		}
+		
+		
+		@Override
+		public String getAbilityName() {
+			// TODO Auto-generated method stub
+			return "Death";
+			
+		}
+
+		@Override
+		public boolean isCompanion() {
+			// TODO Auto-generated method stub
+			return state.isCompanion();
+		}
+
+		
 		
 }

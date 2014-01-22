@@ -1,5 +1,7 @@
 package jswtorparser.event.factory;
 
+import jswtorparser.event.SwtorParser.StateChange;
+
 
 
 /**
@@ -29,42 +31,72 @@ package jswtorparser.event.factory;
  */
 public class ThreatEvent extends SwtorParserEvent{
 	
-	private long value;
-	private boolean isPlayer;
+
 
 	/**
 	 * 
-	 * @param value amount of threat generated 
-	 * @param isPlayer true if is player false for companion
-	
+	 * @param et {@link SwtorEventType}
+	 * @param state {@link StateChange} of the event
 	 */
-	public ThreatEvent(long value, boolean isPlayer){
+	public ThreatEvent(StateChange sc){
 		
-		super(SwtorEventType.THREAT);
-		this.value=value;
-		this.isPlayer=isPlayer;
+		super(SwtorEventType.THREAT,sc);
+		
 	
 	}
 	
-	/**
-	 * Amount of threat
-	 * @return the value of threat
-	 */
-	public long getValue() {
-		return value;
-	}
+	
 
-	/**
-	 * If player is active 
-	 * @return the isPlayer true if player is the one generating threat
-	 */
-	public boolean isPlayer() {
-		return isPlayer;
-	}
 
 	@Override
 	protected void run() {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+
+	@Override
+	public boolean isPlayer() {
+		// TODO Auto-generated method stub
+		return state.isPlayer();
+	}
+
+
+
+
+	@Override
+	public long getValue() {
+		// TODO Auto-generated method stub
+		return state.getValue();
+	}
+
+
+
+
+	@Override
+	public boolean isGiven() {
+		// TODO Auto-generated method stub
+		return state.isGiving();
+	}
+
+
+
+
+	@Override
+	public String getAbilityName() {
+		// TODO Auto-generated method stub
+		return state.getAbility();
+	}
+
+
+
+
+	@Override
+	public boolean isCompanion() {
+		// TODO Auto-generated method stub
+		return state.isCompanion();
+	}
+	
 }
