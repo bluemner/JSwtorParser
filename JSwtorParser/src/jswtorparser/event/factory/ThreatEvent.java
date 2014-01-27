@@ -32,11 +32,9 @@ import jswtorparser.event.SwtorParser.StateChange;
 public class ThreatEvent extends SwtorParserEvent{
 	
 
-
 	/**
-	 * 
-	 * @param et {@link SwtorEventType}
-	 * @param state {@link StateChange} of the event
+	 * Creates a threat event
+	 * @param sc {@link StateChange}
 	 */
 	public ThreatEvent(StateChange sc){
 		

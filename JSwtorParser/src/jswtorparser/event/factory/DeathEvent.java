@@ -28,11 +28,10 @@ under the License.
  */
 public class DeathEvent extends SwtorParserEvent {
 
-	/**
-	 * 
-	 * @param et {@link SwtorEventType}
-	 * @param state {@link StateChange} of the event
-	 */
+		/**
+		 * Creates a Death Event
+		 * @param sc  {@link StateChange}
+		 */
 		public DeathEvent(StateChange sc){
 			
 			super(SwtorEventType.DEATH, sc);

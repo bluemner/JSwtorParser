@@ -34,34 +34,7 @@ public class SwtorParser {
 	private boolean isRunning;
 	private String playerName;
 	private Set<SwtorParserListener> listeners;
-	boolean DEBUG=true;
-
-	//
-	// /*
-	// *Fight
-	// */
-	// int DAMAGE_GIVEN;
-	// int DAMAGE_RECIVED;
-	// int HEALS_GIVEN;
-	// int HEALS_RECIVED;
-	// int HEALS_THREAT;
-	// int DAMAGE_THREAT;
-	// int Threat; //Heals + Damage
-	// int COMPANION_DAMAGE_GIVEN;
-	// int COMPANION_DAMAGE_RECIVED;
-	// int COMPANION_HEALS_GIVEN;
-	// int COMPANION_HEALS_RECIVED;
-	// int COMPANION_Threat;
-	//
-	// /*
-	// * Total
-	// */
-	// long Total_DAMAGE_GIVEN;
-	// long Total_DAMAGE_RECIVED;
-	// long Total_HEALS_GIVEN;
-	// long Total_HEALS_RECIVED;
-	// long Total_Threat;
-	//
+	boolean DEBUG = false;
 
 	public SwtorParser() {
 		this.listeners = new HashSet<SwtorParserListener>();
@@ -116,37 +89,37 @@ public class SwtorParser {
 	/*
 	 * Player Code
 	 */
-	public void fireHealGiven(StateChange sc) {
+	private void fireHealGiven(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.healGiven(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireHealRecevied(StateChange sc) {
+	private void fireHealRecevied(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.healRecevied(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireDamageGiven(StateChange sc) {
+	private void fireDamageGiven(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.damageGiven(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireDamageRecvied(StateChange sc) {
+	private void fireDamageRecvied(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.damageRecvied(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireThreat(StateChange sc) {
+	private void fireThreat(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.threat(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireDeath(StateChange sc) {
+	private void fireDeath(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.death(SwtorEventFactory.newEvent(sc));
 		}
@@ -155,37 +128,37 @@ public class SwtorParser {
 	/*
 	 * Companion
 	 */
-	public void fireCompanionHealGiven(StateChange sc) {
+	private void fireCompanionHealGiven(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.companionHealGiven(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireCompanionHealRecevied(StateChange sc) {
+	private void fireCompanionHealRecevied(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.companionHealRecevied(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireCompanionDamageGiven(StateChange sc) {
+	private void fireCompanionDamageGiven(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.companionDamageGiven(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireCompanionDamageRecvied(StateChange sc) {
+	private void fireCompanionDamageRecvied(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.companionDamageRecvied(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireCompanionThreat(StateChange sc) {
+	private void fireCompanionThreat(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.companionThreat(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireCompanionDeath(StateChange sc) {
+	private void fireCompanionDeath(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.companionDeath(SwtorEventFactory.newEvent(sc));
 		}
@@ -194,31 +167,34 @@ public class SwtorParser {
 	/*
 	 * Action
 	 */
-	public void fireClear() {
+	@SuppressWarnings("unused")
+	private void fireClear() {
 		for (SwtorParserListener l : this.listeners) {
 			l.clear();
 		}
 	}
 
-	public void fireCombatStarted(StateChange sc) {
+	private void fireCombatStarted(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.combatStarted(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireCombatEnded(StateChange sc) {
+	private void fireCombatEnded(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.combatEnded(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireCombatPaused(StateChange sc) {
+	@SuppressWarnings("unused")
+	private void fireCombatPaused(StateChange sc) {
 		for (SwtorParserListener l : this.listeners) {
 			l.combatPaused(SwtorEventFactory.newEvent(sc));
 		}
 	}
 
-	public void fireUpdate() {
+	@SuppressWarnings("unused")
+	private void fireUpdate() {
 		for (SwtorParserListener l : this.listeners) {
 			l.update();
 		}
@@ -261,8 +237,8 @@ public class SwtorParser {
 		if (m.find()) {
 			for (int i = 0; i < 8; ++i) {
 				group[i] = m.group(i);
-				if(DEBUG)
-				_(m.group(i));
+				if (DEBUG)
+					_(m.group(i));
 			}
 		} else
 			System.out.println("bad :(");
@@ -286,9 +262,9 @@ public class SwtorParser {
 			} else if (playerName.equals(m.group(3))) {
 				sc1.isGiving = true;
 				if (m.group(4).contains(":")) {
-					
+
 					sc1.isPlayer = false;
-					sc1.isCompanion=true;
+					sc1.isCompanion = true;
 				} else
 					sc1.isPlayer = true;
 
@@ -309,7 +285,7 @@ public class SwtorParser {
 
 				if (m.group(4).contains(":")) {
 					sc1.isPlayer = false;
-					sc1.isCompanion=true;
+					sc1.isCompanion = true;
 				} else
 					sc1.isPlayer = true;
 			}
@@ -332,43 +308,38 @@ public class SwtorParser {
 		} else
 			System.out.println("bad 4:(");
 		/*
-		 * 6 Value
-		 * TODO Value
+		 * 6 Value TODO Value
 		 */
-		line ="(\\()"+"(\\d+)?"+"(\\*)?"+"(\\))";
-		
-		
-		
-		
+		line = "(\\()" + "(\\d+)?" + "(\\*)?" + "(\\))";
+
 		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 		m = p.matcher(group[6]);
 		if (m.find()) {
-			if(m.group(2)!=null){
-				sc1.value=Integer.parseInt(m.group(2));
+			if (m.group(2) != null) {
+				sc1.value = Integer.parseInt(m.group(2));
 			}
 		} else
 			System.out.println("bad 6:(");
 		/*
-		 * 7 Threat
-		 * TODO Threat
+		 * 7 Threat TODO Threat
 		 */
-		if(group[7]!=null){
-		line ="(\\<)?"+"(\\d+)?"+"(\\*)?"+"(\\>)?";
-		p = Pattern.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-		
-		m = p.matcher(group[7]);
-		if (m.find()) {
-			if(m.group(2)!=null){
-				sc1.threat=Integer.parseInt(m.group(2));
-			}
-		} else
-			System.out.println("bad 7:(");
+		if (group[7] != null) {
+			line = "(\\<)?" + "(\\d+)?" + "(\\*)?" + "(\\>)?";
+			p = Pattern
+					.compile(line, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+
+			m = p.matcher(group[7]);
+			if (m.find()) {
+				if (m.group(2) != null) {
+					sc1.threat = Integer.parseInt(m.group(2));
+				}
+			} else
+				System.out.println("bad 7:(");
 		}
 		/*
-		 * 5 Type 
-		 *last because we use this to fire event
+		 * 5 Typelast because we use this to fire event
 		 */
-		//_("G5\n" + group[5] + "\n");
+		// _("G5\n" + group[5] + "\n");
 		line = "(\\[)?" + "([^\\{]*)?" + "(\\{)?" + "(\\d+)?" + "(\\})?"
 				+ "(:)?" + "([^\\{]*)?" + "(\\d)?" + "(\\])?";
 
@@ -386,6 +357,7 @@ public class SwtorParser {
 			} else {
 				type = type.trim();
 				type = type.toUpperCase();
+				// _(sc1.toString());
 				if (type.contains("EnterCombat")) {
 					sc1.type = SwtorEventType.COMBAT;
 					sc1.state = CombatEvent.STARTED;
@@ -396,11 +368,10 @@ public class SwtorParser {
 					sc1.type = SwtorEventType.COMBAT;
 					sc1.state = CombatEvent.STOPED;
 
-					
 					this.fireCombatEnded(sc1);
 				} else if (type.contains("HEAL")) {
 					sc1.type = SwtorEventType.HEALS;
-				
+
 					if (sc1.isPlayer) {
 						/*
 						 * Is the player
@@ -472,12 +443,10 @@ public class SwtorParser {
 
 		} else
 			System.out.println("bad 5:(");
-		
-		
+
 	}
 
 	public static void main(String[] args) {
-
 		String test = "[23:00:17.885] [@Försäkën:Treek {3275183146139648}] [@Försäkën:Treek {3275183146139648}] [Fektur Dart {3279138811019264}] [ApplyEffect {836045448945477}: Heal {836045448945500}] (87) <11>";
 		SwtorParser p = new SwtorParser();
 		p.addSwtorParserListener(new SwtorParserListener() {
@@ -605,12 +574,13 @@ public class SwtorParser {
 	 * 
 	 */
 	public class StateChange {
-		protected int threat=0;
-		protected int value=0;
-		protected SwtorEventType type=SwtorEventType.UNKNOWN;
-		protected boolean isPlayer =false, isGiving=false,isCompanion=false;
-		protected byte state=-1;
-		protected String ability="";
+		protected int threat = 0;
+		protected int value = 0;
+		protected SwtorEventType type = SwtorEventType.UNKNOWN;
+		protected boolean isPlayer = false, isGiving = false,
+				isCompanion = false;
+		protected byte state = -1;
+		protected String ability = "";
 
 		/**
 		 * Creates an instance of State Change
@@ -711,7 +681,14 @@ public class SwtorParser {
 		public void setAbility(String ability) {
 			this.ability = ability;
 		}
-		
+
+		@Override
+		public String toString() {
+			return "StateChange [threat=" + threat + ", value=" + value
+					+ ", type=" + type + ", isPlayer=" + isPlayer
+					+ ", isGiving=" + isGiving + ", isCompanion=" + isCompanion
+					+ ", state=" + state + ", ability=" + ability + "]";
+		}
 
 	}
 

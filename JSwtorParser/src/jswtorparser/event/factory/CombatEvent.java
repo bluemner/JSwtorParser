@@ -32,9 +32,8 @@ public class CombatEvent extends SwtorParserEvent {
 	public final static byte  PAUSED =2;
 	
 	/**
-	 * 
-	 * @param et {@link SwtorEventType}
-	 * @param state {@link StateChange} of the event
+	 * Creates a combat event
+	 * @param sc {@link StateChange}
 	 */
 	public CombatEvent( StateChange sc) {
 		super(SwtorEventType.COMBAT,sc);

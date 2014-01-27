@@ -29,11 +29,10 @@ under the License.
 public class DamageEvent extends SwtorParserEvent{
 	
 	
-	/**
-	 * 
-	 * @param et {@link SwtorEventType}
-	 * @param state {@link StateChange} of the event
-	 */
+		/**
+		 * Creates a damage event
+		 * @param sc {@link StateChange}
+		 */
 	public DamageEvent(StateChange sc){	
 		super(SwtorEventType.DAMAGE,sc);
 		

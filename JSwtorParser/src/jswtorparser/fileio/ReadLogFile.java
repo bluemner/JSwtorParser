@@ -8,24 +8,56 @@ import java.io.RandomAccessFile;
 import javax.swing.JFileChooser;
 
 import jswtorparser.event.SwtorParser;
+/*
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
 
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+*/
+/**
+ * Finds the Swtor combat logs and send the lines of text to {@link SwtorParser}
+ * @author Brandon Bluemner
+ *
+ */
 public class ReadLogFile {
 	  static String location = new JFileChooser().getFileSystemView().getDefaultDirectory().toString()+ "\\Star Wars - The Old Republic\\CombatLogs";
 	  private boolean autoUpdate=true;
 	  SwtorParser parser;
 	/**
-	 * @param args
+	 * @param args 
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
+		if(args.length==0){
+			 new ReadLogFile();
+		}else
+			 new ReadLogFile(args[0]);
+		
+		
 	}
 	
+	/**
+	 * 
+	 * @param src the absolute path of the combat log you wish to parse
+	 */
 	public  ReadLogFile(String src){
 		parser = new SwtorParser();
 		 File f = new File(src);
 		    if (!f.exists())
-		      _e("Uable to find Swtor Folder");
+		      _e("Unable to find Swtor Folder");
 		    else
 		      readFile(src);
 	}
@@ -33,7 +65,7 @@ public class ReadLogFile {
 	    this(location);
 	}
 	/**
-	 * 
+	 * Set the value to look for the most recently modifyed file.
 	 * @param autoUpdate  look for most up-to-date file in the directory
 	 */
 	public ReadLogFile(boolean autoUpdate){
@@ -122,7 +154,7 @@ public class ReadLogFile {
 	 }
 	
 	/**
-	 * 
+	 * Method for handling errors 
 	 * @param s String to send to error
 	 */
 	private void _e(String s){

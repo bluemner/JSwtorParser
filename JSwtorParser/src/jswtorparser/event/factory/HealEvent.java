@@ -32,9 +32,8 @@ public class HealEvent extends SwtorParserEvent {
 
 
 	/**
-	 * 
-	 * @param et {@link SwtorEventType}
-	 * @param state {@link StateChange} of the event
+	 * Creates a Heal event
+	 * @param sc {@link StateChange}
 	 */
 	public HealEvent( StateChange sc){
 		super(SwtorEventType.HEALS, sc);
