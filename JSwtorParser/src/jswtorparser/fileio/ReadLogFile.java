@@ -8,6 +8,7 @@ import java.io.RandomAccessFile;
 import javax.swing.JFileChooser;
 
 import jswtorparser.event.SwtorParser;
+import jswtorparser.event.SwtorParserListener;
 /*
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -35,6 +36,8 @@ public class ReadLogFile {
 	  static String location = new JFileChooser().getFileSystemView().getDefaultDirectory().toString()+ "\\Star Wars - The Old Republic\\CombatLogs";
 	  private boolean autoUpdate=true;
 	  SwtorParser parser;
+	
+
 	/**
 	 * @param args 
 	 */
@@ -45,22 +48,40 @@ public class ReadLogFile {
 			 new ReadLogFile();
 		}else
 			 new ReadLogFile(args[0]);
-		
-		
 	}
 	
 	/**
-	 * 
+	 * Reads the log file and sends the line to {@link SwtorParser}
 	 * @param src the absolute path of the combat log you wish to parse
 	 */
 	public  ReadLogFile(String src){
+		this(src,null);
+	}
+	/**
+	 * 
+	 * @param src the absolute path of the combat log to parse 
+	 * @param l instance of {@link SwtorParserListener} use for events 
+	 */
+	public ReadLogFile(String src, SwtorParserListener l){
 		parser = new SwtorParser();
+		if(l!=null) 
+		this.parser.addSwtorParserListener(l);
+		 
 		 File f = new File(src);
 		    if (!f.exists())
 		      _e("Unable to find Swtor Folder");
 		    else
 		      readFile(src);
+		    
 	}
+	
+	public ReadLogFile(SwtorParserListener l){
+		this(getCurentFile(),l);
+	}
+	
+	/**
+	 * Reads the log file and sends the line to {@link SwtorParser}
+	 */
 	public ReadLogFile(){    
 	    this(location);
 	}
@@ -72,6 +93,10 @@ public class ReadLogFile {
 	    this(location);
 	    this.autoUpdate=autoUpdate;
 	}
+	/**
+	 * 
+	 * @param src absolute path to file
+	 */
 	 private void readFile(String src)
 	  {
 	    final String want = src;
@@ -106,7 +131,7 @@ public class ReadLogFile {
 
 	            if (lastCheck + 60000L >= System.currentTimeMillis()) continue;
 	           if(autoUpdate)
-	            location =ReadLogFile.this.getCurentFile();
+	            location =ReadLogFile.getCurentFile();
 	           
 	            lastCheck = System.currentTimeMillis();
 	          }
@@ -136,12 +161,10 @@ public class ReadLogFile {
 	    read.start();
 	  }
 	 /**
-	  * 
+	  * Get the absolute location of current file
 	  * @return String location of the file that has the most recent modification
 	  */
-	private String getCurentFile() {
-	  
-
+	public  static String getCurentFile() {
 	    File f = new File(location);
 	    File[] files = f.listFiles();
 
@@ -160,4 +183,12 @@ public class ReadLogFile {
 	private void _e(String s){
 		System.err.println(s);
 	}
+	/**
+	 * Get the instance of Swtor Parser
+	 * @return instance of {@link SwtorParser}
+	 */
+	public SwtorParser getParser() {
+		return parser;
+	}
+	
 }
